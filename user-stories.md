@@ -22,4 +22,3 @@ As a customer, I want a clear, easy to parse set of instructions.
 As a customer, I want a responsive website so that I can finish quickly.
 As a customer, I want to see what my peers have voted for.
 As a customer, I want to see an attractive website.
-As a customer, I want to
