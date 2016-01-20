@@ -1,6 +1,8 @@
 'use strict';
 
 var productList = [];
+var randomProductsArray = []; //temporarily holds the three images until they are displayed.
+var clickCounter = 0;
 
 function Product(picturePath){
   this.picturePath = picturePath;
@@ -26,38 +28,93 @@ var usb = new Product('img/usb.gif');
 var waterCan = new Product('img/watercan.jpg');
 var wineGlass = new Product('img/wineglass.jpg');
 
-var thisSelection = [];
 function randomProducts() {
   console.log('randomizer function');
+  randomProductsArray = [];
   var productGenerated = 0;
-  while (thisSelection.length < 3) {
+  while (randomProductsArray.length < 3) {
     console.log('first while loop');
-    // do {
+    //start nested loop
+    do {
       console.log('do-while loop');
       productGenerated = Math.floor(Math.random() * productList.length);
       console.log('Number generated: ' + productGenerated);
-    // } while (thisSelection.indexOf(productGenerated) === -1 false);
-    thisSelection.push(productGenerated);
-    console.log('Array contains: ' + thisSelection);
+    } while (randomProductsArray.indexOf(productGenerated) !== -1);
+
+    randomProductsArray.push(productGenerated);
+    console.log('Array contains: ' + randomProductsArray);
   }
 }
 
 
-function displayProducts() {
+function displayProducts() {   //find a way to clear old image elements
   console.log('display loop running');
   randomProducts();
-
-  for (var i = 0; i < thisSelection.length; i++) {
-    var pictureLocation = document.getElementById('picture');
+  for (var i = 0; i < randomProductsArray.length; i++) {
+    console.log('inside for loop inside displayProducts');
+    var imageSpots = ['pictureOne', 'pictureTwo', 'pictureThree'];
+    console.log('imageSpots = ' + imageSpots);
+    var pictureLocation = document.getElementById(imageSpots[i]);
+    pictureLocation.innerHTML = "";
+    console.log('pictureLocation= ' + pictureLocation);
+    console.log('imageSpots[i]= ' + imageSpots[i]);
     var createImage = document.createElement('img');
-    var attachImage = document.setAttribute('src', thisRound[i].picturePath);
-    createElement.appendChild(attachImage);
-    pictureLocation.appendChild(createElement);
+    createImage.src = productList[randomProductsArray[i]].picturePath;
+    pictureLocation.appendChild(createImage);
+//stick code to track times shown here
   }
 }
+
 displayProducts();
 
-// for (var i = 0; i < 3; i++) {
-//   displayProducts();
-//   console.log('display loop is running');
-// }
+// event handling
+pictureOne.addEventListener('click', productOneChosen);
+pictureTwo.addEventListener('click', productTwoChosen);
+pictureThree.addEventListener('click', productThreeChosen);
+
+function productOneChosen() {
+  console.log(event);
+  event.preventDefault();
+  productList[randomProductsArray[0]].votes += 1;  //returns NaN. Why?
+  clickCounter++;
+  if (clickCounter < 15) {
+    displayProducts();
+  }
+}
+function productTwoChosen() {
+  console.log(event);
+  event.preventDefault();
+  productList[randomProductsArray[1]].votes += 1;//returns NaN. Why?
+  clickCounter++;
+  if (clickCounter < 15) {
+    displayProducts();
+  }
+}
+function productThreeChosen(){
+  console.log(event);
+  event.preventDefault();
+  productList[randomProductsArray[2]].votes += 1;//returns NaN. Why?
+  clickCounter++;
+  if (clickCounter < 15) {
+    displayProducts();
+  }
+}
+
+//beginning of bar chart section
+
+if (clickCounter >= 15) { //automatically displays results on 15th click. To replace with event listener calling .getBarsAtEvent (event) tomorrow.
+  var results = document.getElementById('results').getContext('2d');
+  new Chart(results).Bar(barData)
+}
+var barData = {
+  labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
+  datasets : [
+    {
+      fillColor : '#48A497',
+      strokeColor : '#48A4D1',
+      //data : [find a way to stick productList[i][1] here.]
+      }
+
+    }
+  ]
+}

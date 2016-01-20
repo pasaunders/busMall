@@ -21,10 +21,15 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
+
+  <!-- Libraries
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="js/chart.js"></script>
 
 </head>
 <body>
@@ -34,26 +39,26 @@
   <div class="container">
     <header class="row">
       <!-- occupies half the row, with a margin on top of 25% of the screen -->
-      <article class="one-half column" style="margin-top: 5%">
-        <h4>Instructions go here</h4>
-        <p>Further instructions go here.</p>
+      <article class="one-half column" style="">
+        <h4>Thank you for taking our survey.</h4>
+        <p>Please click on the product you would most like to purchase.</p>
       </article>
     </header>
     <section class="row">
       <!-- pictures and containers go in this section -->
-      <article class="one-third column" id="pictureOne">
+      <article class="one-third column product" id="pictureOne">
         <!-- Picture -->
       </article>
-      <article class="one-third column" id="pictureTwo">
+      <article class="one-third column product" id="pictureTwo">
         <!-- picture -->
       </article>
-      <article class="one-third column" id="pictureThree">
+      <article class="one-third column product" id="pictureThree">
         <!-- picture -->
       </article>
     </section>
     <section class="row">
       <article class="twelve columns">
-
+        <canvas id="results" width="600" height="400"></canvas>
       </article>
     </section>
   </div>
