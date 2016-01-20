@@ -1,5 +1,13 @@
-img {
+article img {
   height: auto;
   width: auto;
+  max-height: 400px;
   max-width: 100%;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
 }
+/*.product > img{
+  width = 20em;
+  height = 20em;
+}*/

@@ -30,6 +30,7 @@ var wineGlass = new Product('img/wineglass.jpg');
 
 function randomProducts() {
   console.log('randomizer function');
+  randomProductsArray = [];
   var productGenerated = 0;
   while (randomProductsArray.length < 3) {
     console.log('first while loop');
@@ -46,22 +47,21 @@ function randomProducts() {
 }
 
 
-function displayProducts() {
+function displayProducts() {   //find a way to clear old image elements
   console.log('display loop running');
   randomProducts();
-
   for (var i = 0; i < randomProductsArray.length; i++) {
     console.log('inside for loop inside displayProducts');
     var imageSpots = ['pictureOne', 'pictureTwo', 'pictureThree'];
     console.log('imageSpots = ' + imageSpots);
     var pictureLocation = document.getElementById(imageSpots[i]);
+    pictureLocation.innerHTML = "";
     console.log('pictureLocation= ' + pictureLocation);
     console.log('imageSpots[i]= ' + imageSpots[i]);
     var createImage = document.createElement('img');
     createImage.src = productList[randomProductsArray[i]].picturePath;
     pictureLocation.appendChild(createImage);
 //stick code to track times shown here
-
   }
 }
 
@@ -75,7 +75,7 @@ pictureThree.addEventListener('click', productThreeChosen);
 function productOneChosen() {
   console.log(event);
   event.preventDefault();
-  productList[randomProductsArray[0]].votes +=
+  productList[randomProductsArray[0]].votes += 1;  //returns NaN. Why?
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -84,7 +84,7 @@ function productOneChosen() {
 function productTwoChosen() {
   console.log(event);
   event.preventDefault();
-  productList[randomProductsArray[1]].votes +=
+  productList[randomProductsArray[1]].votes += 1;//returns NaN. Why?
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -93,7 +93,7 @@ function productTwoChosen() {
 function productThreeChosen(){
   console.log(event);
   event.preventDefault();
-  productList[randomProductsArray[2]].votes +=
+  productList[randomProductsArray[2]].votes += 1;//returns NaN. Why?
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
