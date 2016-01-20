@@ -44,7 +44,7 @@
         <p>Please click on the product you would most like to purchase.</p>
       </article>
     </header>
-    <section class="row">
+    <section class="row pictures" id="pictureHolder">
       <!-- pictures and containers go in this section -->
       <article class="one-third column product" id="pictureOne">
         <!-- Picture -->
@@ -56,8 +56,11 @@
         <!-- picture -->
       </article>
     </section>
-    <section class="row">
+    <section class="row charts" id="chartHolder">
       <article class="twelve columns">
+        <form id="displayButton" action="index.html">
+          <button id="revealButton" type="click" name="button">Show Results</button>
+        </form>
         <canvas id="results" width="600" height="400"></canvas>
       </article>
     </section>
