@@ -99,3 +99,22 @@ function productThreeChosen(){
     displayProducts();
   }
 }
+
+//beginning of bar chart section
+
+if (clickCounter >= 15) { //automatically displays results on 15th click. To replace with event listener calling .getBarsAtEvent (event) tomorrow.
+  var results = document.getElementById('results').getContext('2d');
+  new Chart(results).Bar(barData)
+}
+var barData = {
+  labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
+  datasets : [
+    {
+      fillColor : '#48A497',
+      strokeColor : '#48A4D1',
+      //data : [find a way to stick productList[i][1] here.]
+      }
+
+    }
+  ]
+}
