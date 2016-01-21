@@ -7,3 +7,6 @@ article img {
   border-color: black;
   border-style: solid;
 }
+.charts {
+  display: none;
+}

@@ -3,6 +3,8 @@
 var productList = [];
 var randomProductsArray = []; //temporarily holds the three images until they are displayed.
 var clickCounter = 0;
+var choiceCounter = [];
+var shownCounter = [];
 
 function Product(picturePath){
   this.picturePath = picturePath;
@@ -51,11 +53,12 @@ function displayProducts() {   //find a way to clear old image elements
   console.log('display loop running');
   randomProducts();
   for (var i = 0; i < randomProductsArray.length; i++) {
+    productList[randomProductsArray[i]].shown += 1;
     console.log('inside for loop inside displayProducts');
     var imageSpots = ['pictureOne', 'pictureTwo', 'pictureThree'];
     console.log('imageSpots = ' + imageSpots);
     var pictureLocation = document.getElementById(imageSpots[i]);
-    pictureLocation.innerHTML = "";
+    pictureLocation.innerHTML = '';
     console.log('pictureLocation= ' + pictureLocation);
     console.log('imageSpots[i]= ' + imageSpots[i]);
     var createImage = document.createElement('img');
@@ -65,56 +68,88 @@ function displayProducts() {   //find a way to clear old image elements
   }
 }
 
+function questionsFinished() {
+  for (var i = 0; i < productList.length; i++) {
+    choiceCounter.push(productList[i].votes);
+    shownCounter.push(productList[i].shown);
+    hidePictures();
+    displayButton();
+  }
+}
+
+function hidePictures() {
+  document.getElementById('pictureHolder').style.display = 'none';
+}
+
+function displayButton() {
+  document.getElementById('chartHolder').style.display = 'initial';
+  document.getElementById('results').style.display = 'initial';
+}
 displayProducts();
 
 // event handling
 pictureOne.addEventListener('click', productOneChosen);
 pictureTwo.addEventListener('click', productTwoChosen);
 pictureThree.addEventListener('click', productThreeChosen);
+revealButton.addEventListener('click', createTables);
 
 function productOneChosen() {
   console.log(event);
   event.preventDefault();
-  productList[randomProductsArray[0]].votes += 1;  //returns NaN. Why?
+  productList[randomProductsArray[0]].votes += 1;
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
+  }
+  else {
+    questionsFinished();
   }
 }
 function productTwoChosen() {
   console.log(event);
   event.preventDefault();
-  productList[randomProductsArray[1]].votes += 1;//returns NaN. Why?
+  productList[randomProductsArray[1]].votes += 1;
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
   }
+  else {
+    questionsFinished();
+  }
 }
-function productThreeChosen(){
+function productThreeChosen() {
   console.log(event);
   event.preventDefault();
-  productList[randomProductsArray[2]].votes += 1;//returns NaN. Why?
+  productList[randomProductsArray[2]].votes += 1;
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
   }
+  else {
+    questionsFinished();
+  }
 }
 
-//beginning of bar chart section
-
-if (clickCounter >= 15) { //automatically displays results on 15th click. To replace with event listener calling .getBarsAtEvent (event) tomorrow.
-  var results = document.getElementById('results').getContext('2d');
-  new Chart(results).Bar(barData)
-}
-var barData = {
-  labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
-  datasets : [
-    {
-      fillColor : '#48A497',
-      strokeColor : '#48A4D1',
-      //data : [find a way to stick productList[i][1] here.]
+function createTables() {
+  console.log('createTables is running');
+  event.preventDefault();
+  var data = {
+    labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
+    datasets : [
+      {
+        label : 'Item Chosen',
+        fillColor : '#48A497',
+        strokeColor : '#48A4D1',
+        data : choiceCounter
+      },
+      {
+        label : 'Item Viewed',
+        fillColor : 'rgba(151,187,205,0.5)',
+        strokeColor : 'rgba(151,187,205,0.8)',
+        data : shownCounter
       }
-
-    }
-  ]
+    ]
+  };
+  var results = document.getElementById('results').getContext('2d');
+  new Chart(results).Bar(data);
 }

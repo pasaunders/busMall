@@ -1,0 +1,12 @@
+README.md
+**.html
+**.css
+.gitignmore
+css/**
+img/**
+js/Chart.js
+.DS_Store
+.eslintrc
+.eslintigmore
+images/**
+user-stories.md
