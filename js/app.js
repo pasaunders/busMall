@@ -133,7 +133,7 @@ function productThreeChosen() {
 function createTables() {
   console.log('createTables is running');
   event.preventDefault();
-  var barData = {
+  var data = {
     labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
     datasets : [
       {
@@ -151,5 +151,5 @@ function createTables() {
     ]
   };
   var results = document.getElementById('results').getContext('2d');
-  new Chart(results).Bar(barData);
+  new Chart(results).Bar(data);
 }
