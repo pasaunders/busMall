@@ -15,10 +15,11 @@ As a developer, I want to utilize CSS and images to develop an attractive brand 
 As a developer, I want to use modular code to make changes easier to implement.
 As a developer, I want to record user choices, then offer a "see results" button.
 As a developer, I want to make sure that only one copy of each product is displayed.
+As a developer, I want to gather information useful for making product decisions.
 
 ----------------------------------------------------------------------------------------
 
-As a customer, I want a clear, easy to parse set of instructions.
-As a customer, I want a responsive website so that I can finish quickly.
-As a customer, I want to see what my peers have voted for.
-As a customer, I want to see an attractive website.
+As a user, I want a clear, easy to parse set of instructions.
+As a user, I want a responsive website so that I can finish quickly.
+As a user, I want to see what my peers have voted for.
+As a user, I want to see an attractive website.
