@@ -83,7 +83,7 @@ function hidePictures() {
 
 function displayButton() {
   document.getElementById('chartHolder').style.display = 'initial';
-  document.getElementById('results').style.display = 'initial';
+  document.getElementById('ctx').style.display = 'initial';
 }
 displayProducts();
 
@@ -92,6 +92,13 @@ pictureOne.addEventListener('click', productOneChosen);
 pictureTwo.addEventListener('click', productTwoChosen);
 pictureThree.addEventListener('click', productThreeChosen);
 revealButton.addEventListener('click', createTables);
+
+var clearLS = document.getElementById('lsClear')
+var handleLSClear = function () { //clear LS functionality
+  console.log('clearing local storage');
+  localStorage.clear();
+}
+clearLS.addEventListener('click', handleLSClear);
 
 function productOneChosen() {
   console.log(event);
@@ -131,25 +138,28 @@ function productThreeChosen() {
 }
 
 function createTables() {
-  console.log('createTables is running');
+  // console.log('createTables is running');
   event.preventDefault();
+  var ctx = document.getElementById('ctx').getContext('2d');
+  new Chart(ctx).Bar(data);
   var data = {
-    labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
-    datasets : [
+    labels: ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
+    datasets: [
       {
-        label : 'Item Chosen',
-        fillColor : '#48A497',
-        strokeColor : '#48A4D1',
-        data : choiceCounter
+        label: 'Item Chosen',
+        fillColor: '#48A497',
+        strokeColor: '#48A4D1',
+        data: choiceCounter
       },
       {
-        label : 'Item Viewed',
-        fillColor : 'rgba(151,187,205,0.5)',
-        strokeColor : 'rgba(151,187,205,0.8)',
-        data : shownCounter
+        label: 'Item Viewed',
+        fillColor: 'rgba(151,187,205,0.5)',
+        strokeColor: 'rgba(151,187,205,0.8)',
+        data: shownCounter
       }
     ]
   };
-  var results = document.getElementById('results').getContext('2d');
-  new Chart(results).Bar(data);
+  console.log(choiceCounter);
+  console.log(data.labels.length)
+  console.log(shownCounter);
 }
