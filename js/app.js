@@ -58,7 +58,7 @@ function displayProducts() {   //find a way to clear old image elements
     var imageSpots = ['pictureOne', 'pictureTwo', 'pictureThree'];
     console.log('imageSpots = ' + imageSpots);
     var pictureLocation = document.getElementById(imageSpots[i]);
-    pictureLocation.innerHTML = "";
+    pictureLocation.innerHTML = '';
     console.log('pictureLocation= ' + pictureLocation);
     console.log('imageSpots[i]= ' + imageSpots[i]);
     var createImage = document.createElement('img');
@@ -69,12 +69,12 @@ function displayProducts() {   //find a way to clear old image elements
 }
 
 function questionsFinished() {
-    for (var i = 0; i < productList.length; i++) {
-      choiceCounter.push(productList[i].votes);
-      shownCounter.push(productList[i].shown);
-      hidePictures();
-      displayButton();
-    }
+  for (var i = 0; i < productList.length; i++) {
+    choiceCounter.push(productList[i].votes);
+    shownCounter.push(productList[i].shown);
+    hidePictures();
+    displayButton();
+  }
 }
 
 function hidePictures() {
@@ -82,8 +82,8 @@ function hidePictures() {
 }
 
 function displayButton() {
-  document.getElementById('chartHolder').style.display = 'initial'
-  document.getElementById('results').style.display = 'initial'
+  document.getElementById('chartHolder').style.display = 'initial';
+  document.getElementById('results').style.display = 'initial';
 }
 displayProducts();
 
@@ -144,8 +144,8 @@ function createTables() {
       },
       {
         label : 'Item Viewed',
-        fillColor : "rgba(151,187,205,0.5)",
-        strokeColor : "rgba(151,187,205,0.8)",
+        fillColor : 'rgba(151,187,205,0.5)',
+        strokeColor : 'rgba(151,187,205,0.8)',
         data : shownCounter
       }
     ]
