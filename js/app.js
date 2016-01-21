@@ -3,8 +3,20 @@
 var productList = [];
 var randomProductsArray = []; //temporarily holds the three images until they are displayed.
 var clickCounter = 0;
-var choiceCounter = [];
-var shownCounter = [];
+var choiceCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var shownCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+var chartData = localStorage.getItem('chartPersist');
+var shownData = localStorage.getItem('shownPersist');
+if (chartData) {
+  console.log('im turning from a string to a thing');
+  choiceCounter = JSON.parse(chartData);
+  shownCounter = JSON.parse(shownData);
+} else {
+  console.log('local empty yo!');
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
+  localStorage.setItem('shownPersist', JSON.stringify(shownCounter));
+}
 
 function Product(picturePath){
   this.picturePath = picturePath;
@@ -54,6 +66,8 @@ function displayProducts() {   //find a way to clear old image elements
   randomProducts();
   for (var i = 0; i < randomProductsArray.length; i++) {
     productList[randomProductsArray[i]].shown += 1;
+    shownCounter[randomProductsArray[i]] += 1;
+    localStorage.setItem('shownPersist', JSON.stringify(shownCounter));
     console.log('inside for loop inside displayProducts');
     var imageSpots = ['pictureOne', 'pictureTwo', 'pictureThree'];
     console.log('imageSpots = ' + imageSpots);
@@ -69,12 +83,8 @@ function displayProducts() {   //find a way to clear old image elements
 }
 
 function questionsFinished() {
-  for (var i = 0; i < productList.length; i++) {
-    choiceCounter.push(productList[i].votes);
-    shownCounter.push(productList[i].shown);
     hidePictures();
     displayButton();
-  }
 }
 
 function hidePictures() {
@@ -104,6 +114,8 @@ function productOneChosen() {
   console.log(event);
   event.preventDefault();
   productList[randomProductsArray[0]].votes += 1;
+  choiceCounter[randomProductsArray[0]] += 1;
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -116,6 +128,8 @@ function productTwoChosen() {
   console.log(event);
   event.preventDefault();
   productList[randomProductsArray[1]].votes += 1;
+  choiceCounter[randomProductsArray[1]] += 1;
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -128,6 +142,8 @@ function productThreeChosen() {
   console.log(event);
   event.preventDefault();
   productList[randomProductsArray[2]].votes += 1;
+  choiceCounter[randomProductsArray[2]] += 1;
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -140,8 +156,6 @@ function productThreeChosen() {
 function createTables() {
   // console.log('createTables is running');
   event.preventDefault();
-  var ctx = document.getElementById('ctx').getContext('2d');
-  new Chart(ctx).Bar(data);
   var data = {
     labels: ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
     datasets: [
@@ -158,8 +172,8 @@ function createTables() {
         data: shownCounter
       }
     ]
-  };
-  console.log(choiceCounter);
-  console.log(data.labels.length)
-  console.log(shownCounter);
+  }
+  // var ctx = document.getElementById('ctx').getContext('2d');
+  var ctx = document.getElementById("ctx").getContext("2d");
+  new Chart(ctx).Bar(data);
 }
