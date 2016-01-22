@@ -3,8 +3,20 @@
 var productList = [];
 var randomProductsArray = []; //temporarily holds the three images until they are displayed.
 var clickCounter = 0;
-var choiceCounter = [];
-var shownCounter = [];
+var choiceCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var shownCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+var chartData = localStorage.getItem('chartPersist');
+var shownData = localStorage.getItem('shownPersist');
+if (chartData) {
+  console.log('im turning from a string to a thing');
+  choiceCounter = JSON.parse(chartData);
+  shownCounter = JSON.parse(shownData);
+} else {
+  console.log('local empty yo!');
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
+  localStorage.setItem('shownPersist', JSON.stringify(shownCounter));
+}
 
 function Product(picturePath){
   this.picturePath = picturePath;
@@ -54,6 +66,8 @@ function displayProducts() {   //find a way to clear old image elements
   randomProducts();
   for (var i = 0; i < randomProductsArray.length; i++) {
     productList[randomProductsArray[i]].shown += 1;
+    shownCounter[randomProductsArray[i]] += 1;
+    localStorage.setItem('shownPersist', JSON.stringify(shownCounter));
     console.log('inside for loop inside displayProducts');
     var imageSpots = ['pictureOne', 'pictureTwo', 'pictureThree'];
     console.log('imageSpots = ' + imageSpots);
@@ -69,12 +83,8 @@ function displayProducts() {   //find a way to clear old image elements
 }
 
 function questionsFinished() {
-  for (var i = 0; i < productList.length; i++) {
-    choiceCounter.push(productList[i].votes);
-    shownCounter.push(productList[i].shown);
     hidePictures();
     displayButton();
-  }
 }
 
 function hidePictures() {
@@ -83,7 +93,7 @@ function hidePictures() {
 
 function displayButton() {
   document.getElementById('chartHolder').style.display = 'initial';
-  document.getElementById('results').style.display = 'initial';
+  document.getElementById('ctx').style.display = 'initial';
 }
 displayProducts();
 
@@ -93,10 +103,19 @@ pictureTwo.addEventListener('click', productTwoChosen);
 pictureThree.addEventListener('click', productThreeChosen);
 revealButton.addEventListener('click', createTables);
 
+var clearLS = document.getElementById('lsClear')
+var handleLSClear = function () { //clear LS functionality
+  console.log('clearing local storage');
+  localStorage.clear();
+}
+clearLS.addEventListener('click', handleLSClear);
+
 function productOneChosen() {
   console.log(event);
   event.preventDefault();
   productList[randomProductsArray[0]].votes += 1;
+  choiceCounter[randomProductsArray[0]] += 1;
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -109,6 +128,8 @@ function productTwoChosen() {
   console.log(event);
   event.preventDefault();
   productList[randomProductsArray[1]].votes += 1;
+  choiceCounter[randomProductsArray[1]] += 1;
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -121,6 +142,8 @@ function productThreeChosen() {
   console.log(event);
   event.preventDefault();
   productList[randomProductsArray[2]].votes += 1;
+  choiceCounter[randomProductsArray[2]] += 1;
+  localStorage.setItem('chartPersist', JSON.stringify(choiceCounter));
   clickCounter++;
   if (clickCounter < 15) {
     displayProducts();
@@ -131,25 +154,26 @@ function productThreeChosen() {
 }
 
 function createTables() {
-  console.log('createTables is running');
+  // console.log('createTables is running');
   event.preventDefault();
   var data = {
-    labels : ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
-    datasets : [
+    labels: ['bag', 'banana', 'boots', 'chair', 'cthulhu', 'dragon', 'pen', 'scissors', 'shark', 'sweep', 'unicorn', 'usb', 'watercan', 'wineglass'],
+    datasets: [
       {
-        label : 'Item Chosen',
-        fillColor : '#48A497',
-        strokeColor : '#48A4D1',
-        data : choiceCounter
+        label: 'Item Chosen',
+        fillColor: '#48A497',
+        strokeColor: '#48A4D1',
+        data: choiceCounter
       },
       {
-        label : 'Item Viewed',
-        fillColor : 'rgba(151,187,205,0.5)',
-        strokeColor : 'rgba(151,187,205,0.8)',
-        data : shownCounter
+        label: 'Item Viewed',
+        fillColor: 'rgba(151,187,205,0.5)',
+        strokeColor: 'rgba(151,187,205,0.8)',
+        data: shownCounter
       }
     ]
-  };
-  var results = document.getElementById('results').getContext('2d');
-  new Chart(results).Bar(data);
+  }
+  // var ctx = document.getElementById('ctx').getContext('2d');
+  var ctx = document.getElementById("ctx").getContext("2d");
+  new Chart(ctx).Bar(data);
 }
